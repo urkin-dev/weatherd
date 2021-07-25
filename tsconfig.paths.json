@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"paths": {
+			"@lib/*": ["lib/*"],
+			"@assets/*": ["assets/*"],
+			"@ui": ["ui/index.ts"],
+			"@feature/app": ["./feature/app/shared"]
+		}
+	}
+}
