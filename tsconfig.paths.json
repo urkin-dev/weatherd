@@ -5,7 +5,8 @@
 			"@lib/*": ["lib/*"],
 			"@assets/*": ["assets/*"],
 			"@ui": ["ui/index.ts"],
-			"@feature/app": ["./feature/app/shared"]
+			"@feature/app": ["./feature/app/shared"],
+			"@feature/weather": ["./feature/weather/shared"]
 		}
 	}
 }
