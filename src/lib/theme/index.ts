@@ -20,6 +20,7 @@ export const theme = {
 	color: {
 		black: '#020202',
 		white: '#ffffff',
+		backgray: '#F7F6F9',
 		maingray: '#F6F6F8',
 		lightgray: '#aaa',
 		yellow: '#FDDB4B',
