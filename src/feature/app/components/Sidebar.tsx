@@ -2,14 +2,14 @@ import { styled } from '@linaria/react'
 import Search from './Search'
 import { theme } from '@lib/theme'
 import { Divider } from 'antd'
-import { ReactComponent as Example } from '@assets/weather/03d.svg'
+import { ReactComponent as Example } from '@assets/weather/13d.svg'
 import { ReactComponent as Example1 } from '@assets/weather/09d.svg'
 
 export default function Sidebar() {
 	return (
 		<SidebarContainer>
 			<Search />
-			<WeatherIconExample />
+			<WeatherIcon />
 			<WeatherValue>12&#176;C</WeatherValue>
 			<DateContainer>
 				<WeekDay>Monday,</WeekDay>
@@ -33,12 +33,10 @@ const SidebarContainer = styled.div`
 	flex-direction: column;
 `
 
-const WeatherIconExample = styled.div`
+const WeatherIcon = styled(Example)`
 	margin-top: 30px;
 	width: 200px;
 	height: 200px;
-	border-radius: 50%;
-	background-color: #fee25c;
 `
 
 const WeatherValue = styled.p`

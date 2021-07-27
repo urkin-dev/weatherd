@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 
+export const persistentStorage =
+	!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? sessionStorage : localStorage
+
 export type HttpResponse<T = object> = Promise<AxiosResponse<T>>
 
 export const http = axios.create({
