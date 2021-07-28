@@ -5,23 +5,22 @@ import { ReactComponent as Loupe } from '@assets/loupe.svg'
 import { ReactComponent as Location } from '@assets/location.svg'
 import { KeyboardEvent } from 'react'
 import { useAppDispatch, useAppSelector } from '@lib/hooks'
-import { fetchForecast, getCurrentWeather, setCity } from '@feature/weather'
-import { setCurrentCity } from '@lib/utils'
+import { fetchForecast, getCoords, getCurrentWeather, updateCity } from '@feature/weather'
 
 export default function Search() {
 	const dispatch = useAppDispatch()
-	const storeError = useAppSelector((state) => state.weather.error)
+	const weatherStore = useAppSelector((state) => state.weather)
 
 	const onSearch = async (e: KeyboardEvent<HTMLInputElement>) => {
 		const city = e.currentTarget.value
 
 		try {
-			await dispatch(getCurrentWeather(city)).unwrap()
-			await dispatch(fetchForecast(city)).unwrap()
+			await dispatch(getCoords(city))
+			await dispatch(getCurrentWeather()).unwrap()
+			await dispatch(fetchForecast()).unwrap()
 
 			// If the city is correct
-			dispatch(setCity(city))
-			setCurrentCity(city)
+			dispatch(updateCity())
 		} catch (e) {
 			console.log(e.message)
 		}
@@ -36,7 +35,7 @@ export default function Search() {
 
 	return (
 		<>
-			{storeError?.message && <ErrorMessage>{getRightErrorMessage(storeError.message)}</ErrorMessage>}
+			{weatherStore.error?.message && <ErrorMessage>{getRightErrorMessage(weatherStore.error.message)}</ErrorMessage>}
 			<StyledInput
 				placeholder="Search for places..."
 				prefix={<SearchIcon />}

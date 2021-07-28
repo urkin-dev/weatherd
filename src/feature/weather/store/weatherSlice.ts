@@ -1,16 +1,23 @@
-import { http } from '@lib/http'
+import { geoHttp, http } from '@lib/http'
 import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
 import { store } from '@feature/app'
-import { ForecastListItem, WeatherCurrentDataProps, WeatherForecastDataProps } from './weatherTypes'
+import { ForecastListItem, ILocation, WeatherCurrentDataProps, WeatherForecastDataProps } from './weatherTypes'
+import { setCurrentCity } from '@lib/utils'
 
 export type measurementType = 'metric' | 'imperial'
+
+export interface ICity {
+	name: string
+	lat: number
+	lon: number
+}
 
 // Default State
 interface IStateProps {
 	current: WeatherCurrentDataProps | null
 	measurement: measurementType
 	forecast: WeatherForecastDataProps | null
-	city: string
+	city: ICity
 	nearestForecast: ForecastListItem | null
 	error: SerializedError | null
 }
@@ -19,12 +26,16 @@ const initialState: IStateProps = {
 	current: null,
 	forecast: null,
 	measurement: 'metric',
-	city: 'Moscow',
+	city: {
+		name: 'Moscow',
+		lat: 55.7522,
+		lon: 37.6156
+	},
 	nearestForecast: null,
 	error: null
 }
 
-export const getCurrentWeather = createAsyncThunk('weather/getCurrentWeather', async (newCity?: string) => {
+export const getCurrentWeather = createAsyncThunk('weather/getCurrentWeather', async (newCity?: ICity) => {
 	const { measurement } = store.getState().weather
 
 	if (!newCity) {
@@ -32,21 +43,27 @@ export const getCurrentWeather = createAsyncThunk('weather/getCurrentWeather', a
 	}
 
 	const response = await http.get<WeatherCurrentDataProps>(
-		`/weather?q=${newCity}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
+		`/weather?q=${newCity.name}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
 	)
 
 	return response.data
 })
 
-export const fetchForecast = createAsyncThunk('weather/fetchForecast', async (newCity?: string) => {
+export const fetchForecast = createAsyncThunk('weather/fetchForecast', async (newCity?: ICity) => {
 	const { measurement } = store.getState().weather
 
 	if (!newCity) {
 		newCity = store.getState().weather.city
 	}
 	const response = await http.get<WeatherForecastDataProps>(
-		`forecast?q=${newCity}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
+		`forecast?q=${newCity.name}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
 	)
+	return response.data
+})
+
+export const getCoords = createAsyncThunk('weather/getCoords', async (cityName: string) => {
+	const response = await geoHttp.get<ILocation[]>(`direct?q=${cityName}&appid=${process.env.REACT_APP_API_KEY}`)
+
 	return response.data
 })
 
@@ -62,13 +79,13 @@ const weatherSlice = createSlice({
 				return { payload: { measurement } }
 			}
 		},
-		setCity: {
-			reducer: (state, action: PayloadAction<{ city: string }>) => {
-				state.city = action.payload.city
-			},
-			prepare: (city: string) => {
-				return { payload: { city } }
-			}
+		setCity: (state, action: PayloadAction<ICity>) => {
+			state.city = action.payload
+		},
+
+		updateCity: (state) => {
+			state.city = Object.assign({}, state.city)
+			setCurrentCity(state.city)
 		}
 	},
 	extraReducers: (builder) => {
@@ -84,11 +101,21 @@ const weatherSlice = createSlice({
 		})
 		builder.addCase(fetchForecast.fulfilled, (state, action) => {
 			state.forecast = action.payload
+			console.log(action.payload)
 			state.nearestForecast = action.payload.list[0]
 			state.error = null
+		})
+		builder.addCase(getCoords.fulfilled, (state, action) => {
+			const location = action.payload[0]
+			state.city.name = location.name
+			state.city.lat = location.lat
+			state.city.lon = location.lon
+		})
+		builder.addCase(getCoords.rejected, (state, action) => {
+			state.error = action.error
 		})
 	}
 })
 
-export const { changeMeasurement, setCity } = weatherSlice.actions
+export const { changeMeasurement, setCity, updateCity } = weatherSlice.actions
 export default weatherSlice.reducer

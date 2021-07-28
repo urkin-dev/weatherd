@@ -36,7 +36,7 @@ export default function Sidebar() {
 					</WeatherIconContainer>
 					<WeatherValue>{getDegree(weatherStore.current.main.temp, weatherStore.measurement)}</WeatherValue>
 					<RowContainer>
-						<CityName>{weatherStore.city}</CityName>
+						<CityName>{weatherStore.city.name}</CityName>
 					</RowContainer>
 					<RowContainer>
 						<RowItem>{DATE},</RowItem>

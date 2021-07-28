@@ -9,3 +9,8 @@ export const http = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
 	timeout: 5000
 })
+
+export const geoHttp = axios.create({
+	baseURL: process.env.REACT_APP_API_GEO,
+	timeout: 5000
+})
