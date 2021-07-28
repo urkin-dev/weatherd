@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { store } from '@feature/app'
 import { WeatherCurrentDataProps } from './weatherType'
 
-type measurementType = 'metric' | 'imperial'
+export type measurementType = 'metric' | 'imperial'
 interface IStateProps {
 	current: WeatherCurrentDataProps | null
 	measurement: measurementType

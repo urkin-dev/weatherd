@@ -7,18 +7,24 @@ import { ReactComponent as Example1 } from '@assets/weather/09d.svg'
 import { useAppSelector } from '@lib/hooks'
 import { format } from 'date-fns'
 import { capitalizeFirstLetter } from '@lib/utils'
+import Icon from './Icon'
+import { measurementType } from '@feature/weather'
 
 export default function Sidebar() {
 	const weatherStore = useAppSelector((state) => state.weather)
 	const DATE = format(new Date().getDay(), 'EEEE')
 	const HOUR = format(new Date(), 'HH:mm')
 
-	const getDegree = (temp: number, measurement: string) => {
-		return (
-			<>
-				{Math.round(temp)}&#176;{measurement === 'metric' ? 'C' : 'F'}
-			</>
-		)
+	const getDegree = (temp: number, measurement?: measurementType) => {
+		if (measurement) {
+			return (
+				<>
+					{Math.round(temp)}&#176;{measurement === 'metric' ? 'C' : 'F'}
+				</>
+			)
+		} else {
+			return <>{Math.round(temp)}&#176;</>
+		}
 	}
 
 	return (
@@ -26,7 +32,9 @@ export default function Sidebar() {
 			{weatherStore.current && (
 				<>
 					<Search />
-					<WeatherIcon src="" />
+					<WeatherIconContainer>
+						<Icon name={weatherStore.current.weather[0].icon} />
+					</WeatherIconContainer>
 					<WeatherValue>{getDegree(weatherStore.current.main.temp, weatherStore.measurement)}</WeatherValue>
 					<RowContainer>
 						<CityName>{weatherStore.city}</CityName>
@@ -58,7 +66,7 @@ const SidebarContainer = styled.div`
 	flex-direction: column;
 `
 
-const WeatherIcon = styled.img`
+const WeatherIconContainer = styled.div`
 	margin-top: 30px;
 	width: 200px;
 	height: 200px;

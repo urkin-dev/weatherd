@@ -1,3 +1,5 @@
+import { IconType } from '@feature/app'
+
 export interface WeatherCurrentDataProps {
 	coord: {
 		lon: number
@@ -8,7 +10,7 @@ export interface WeatherCurrentDataProps {
 			id: number
 			main: string
 			description: string
-			icon: string
+			icon: IconType
 		}
 	]
 	base: string
