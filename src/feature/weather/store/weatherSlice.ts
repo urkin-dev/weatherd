@@ -1,7 +1,7 @@
 import { http } from '@lib/http'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
 import { store } from '@feature/app'
-import { ForecastListItem, WeatherCurrentDataProps, WeatherForecastDataProps } from './weatherType'
+import { ForecastListItem, WeatherCurrentDataProps, WeatherForecastDataProps } from './weatherTypes'
 
 export type measurementType = 'metric' | 'imperial'
 
@@ -12,6 +12,7 @@ interface IStateProps {
 	forecast: WeatherForecastDataProps | null
 	city: string
 	nearestForecast: ForecastListItem | null
+	error: SerializedError | null
 }
 // We need nearestForecast because probability of precipitation is not stored inside CurrentWeather in OpenWeatherMap API
 const initialState: IStateProps = {
@@ -19,23 +20,32 @@ const initialState: IStateProps = {
 	forecast: null,
 	measurement: 'metric',
 	city: 'Moscow',
-	nearestForecast: null
+	nearestForecast: null,
+	error: null
 }
 
-export const getCurrentWeather = createAsyncThunk('weather/getCurrentWeather', async () => {
-	const { measurement, city } = store.getState().weather
+export const getCurrentWeather = createAsyncThunk('weather/getCurrentWeather', async (newCity?: string) => {
+	const { measurement } = store.getState().weather
+
+	if (!newCity) {
+		newCity = store.getState().weather.city
+	}
 
 	const response = await http.get<WeatherCurrentDataProps>(
-		`/weather?q=${city}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
+		`/weather?q=${newCity}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
 	)
+
 	return response.data
 })
 
-export const fetchForecast = createAsyncThunk('weather/fetchForecast', async () => {
-	const { measurement, city } = store.getState().weather
+export const fetchForecast = createAsyncThunk('weather/fetchForecast', async (newCity?: string) => {
+	const { measurement } = store.getState().weather
 
+	if (!newCity) {
+		newCity = store.getState().weather.city
+	}
 	const response = await http.get<WeatherForecastDataProps>(
-		`forecast?q=${city}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
+		`forecast?q=${newCity}&units=${measurement}&appid=${process.env.REACT_APP_API_KEY}`
 	)
 	return response.data
 })
@@ -63,17 +73,19 @@ const weatherSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getCurrentWeather.rejected, (state, action) => {
-			console.log(action.error.message)
+			state.error = action.error
 		})
 		builder.addCase(getCurrentWeather.fulfilled, (state, action) => {
 			state.current = action.payload
+			state.error = null
 		})
 		builder.addCase(fetchForecast.rejected, (state, action) => {
-			console.log(action.error.message)
+			state.error = action.error
 		})
 		builder.addCase(fetchForecast.fulfilled, (state, action) => {
 			state.forecast = action.payload
 			state.nearestForecast = action.payload.list[0]
+			state.error = null
 		})
 	}
 })

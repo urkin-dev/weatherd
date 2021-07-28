@@ -2,8 +2,7 @@ import { styled } from '@linaria/react'
 import Search from './Search'
 import { theme } from '@lib/theme'
 import { Divider } from 'antd'
-import { ReactComponent as Example } from '@assets/weather/13d.svg'
-import { ReactComponent as Example1 } from '@assets/weather/09d.svg'
+import { ReactComponent as Rain } from '@assets/weather/rain.svg'
 import { useAppSelector } from '@lib/hooks'
 import { format } from 'date-fns'
 import { capitalizeFirstLetter } from '@lib/utils'
@@ -48,11 +47,13 @@ export default function Sidebar() {
 					</RowContainer>
 					<Divider />
 					<MetaInfoItem>
-						<Example width="20" height="20" />
+						<WeatherMiniContainer>
+							<Icon name={weatherStore.current.weather[0].icon} />
+						</WeatherMiniContainer>
 						<MetaInfoValue>{capitalizeFirstLetter(weatherStore.current.weather[0].description)}</MetaInfoValue>
 					</MetaInfoItem>
 					<MetaInfoItem>
-						<Example1 width="20" height="20" />
+						<Rain width="20" height="20" />
 						{weatherStore.nearestForecast && (
 							<MetaInfoValue>Rain - {weatherStore.nearestForecast.pop * 100}%</MetaInfoValue>
 						)}
@@ -72,6 +73,11 @@ const WeatherIconContainer = styled.div`
 	margin-top: 30px;
 	width: 200px;
 	height: 200px;
+`
+
+const WeatherMiniContainer = styled.div`
+	width: 20px;
+	height: 20px;
 `
 
 const WeatherValue = styled.p`
@@ -100,6 +106,7 @@ const DateValue = styled.p`
 
 const MetaInfoItem = styled.div`
 	display: flex;
+	margin-top: 10px;
 `
 
 const MetaInfoValue = styled.div`

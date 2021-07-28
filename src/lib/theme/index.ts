@@ -24,7 +24,8 @@ export const theme = {
 		maingray: '#F6F6F8',
 		lightgray: '#aaa',
 		yellow: '#FDDB4B',
-		blue: '#404FD1'
+		blue: '#404FD1',
+		danger: '#C51E5A'
 	},
 	font: {
 		size: {

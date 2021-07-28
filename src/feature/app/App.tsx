@@ -5,8 +5,9 @@ import { PageTemplate } from '@ui'
 import { setCity } from '@feature/weather'
 import { useEffect } from 'react'
 import Sidebar from './components/Sidebar'
+import { setCurrentCity } from '@lib/utils'
 
-const DEFAULT_CITY = 'Moscow'
+export const DEFAULT_CITY = 'Moscow'
 
 function App() {
 	const dispatch = useAppDispatch()
@@ -21,7 +22,7 @@ function App() {
 		if (city) {
 			dispatch(setCity(city))
 		} else {
-			persistentStorage.setItem('CITY', DEFAULT_CITY)
+			setCurrentCity(DEFAULT_CITY)
 		}
 
 		dispatch(getCurrentWeather())

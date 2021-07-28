@@ -3,18 +3,51 @@ import { styled } from '@linaria/react'
 import { Input } from 'antd'
 import { ReactComponent as Loupe } from '@assets/loupe.svg'
 import { ReactComponent as Location } from '@assets/location.svg'
+import { KeyboardEvent } from 'react'
+import { useAppDispatch, useAppSelector } from '@lib/hooks'
+import { fetchForecast, getCurrentWeather, setCity } from '@feature/weather'
+import { setCurrentCity } from '@lib/utils'
 
 export default function Search() {
+	const dispatch = useAppDispatch()
+	const storeError = useAppSelector((state) => state.weather.error)
+
+	const onSearch = async (e: KeyboardEvent<HTMLInputElement>) => {
+		const city = e.currentTarget.value
+
+		try {
+			await dispatch(getCurrentWeather(city)).unwrap()
+			await dispatch(fetchForecast(city)).unwrap()
+
+			// If the city is correct
+			dispatch(setCity(city))
+			setCurrentCity(city)
+		} catch (e) {
+			console.log(e.message)
+		}
+	}
+
+	const getRightErrorMessage = (text: string) => {
+		const code = +text.substr(text.length - 3)
+
+		if (code === 404) return 'The city not found'
+		else return 'Something went wrong'
+	}
+
 	return (
-		<StyledInput
-			placeholder="Search for places..."
-			prefix={<SearchIcon />}
-			suffix={
-				<LocationButton>
-					<LocationIcon />
-				</LocationButton>
-			}
-		/>
+		<>
+			{storeError?.message && <ErrorMessage>{getRightErrorMessage(storeError.message)}</ErrorMessage>}
+			<StyledInput
+				placeholder="Search for places..."
+				prefix={<SearchIcon />}
+				onPressEnter={onSearch}
+				suffix={
+					<LocationButton>
+						<LocationIcon />
+					</LocationButton>
+				}
+			/>
+		</>
 	)
 }
 
@@ -73,4 +106,8 @@ const LocationButton = styled.button`
 const LocationIcon = styled(Location)`
 	max-width: 100%;
 	max-height: 100%;
+`
+const ErrorMessage = styled.p`
+	padding: 0;
+	color: ${theme.color.danger};
 `
