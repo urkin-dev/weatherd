@@ -1,14 +1,16 @@
 import { getCurrentWeather } from '@feature/weather'
+import { useAppDispatch } from '@lib/hooks'
 import { persistentStorage } from '@lib/http'
 import { PageTemplate } from '@ui'
+import { setCity } from '@feature/weather'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import Sidebar from './components/Sidebar'
 
 const DEFAULT_CITY = 'Moscow'
 
 function App() {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
+
 	useEffect(() => {
 		restoreSession()
 	}, [])
@@ -17,11 +19,12 @@ function App() {
 		const city = persistentStorage.getItem('CITY')
 
 		if (city) {
-			dispatch(getCurrentWeather(city))
+			dispatch(setCity(city))
 		} else {
-			dispatch(getCurrentWeather(DEFAULT_CITY))
 			persistentStorage.setItem('CITY', DEFAULT_CITY)
 		}
+
+		dispatch(getCurrentWeather())
 	}
 
 	return <PageTemplate left={<Sidebar />} right={<p>Content</p>} />

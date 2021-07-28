@@ -4,26 +4,51 @@ import { theme } from '@lib/theme'
 import { Divider } from 'antd'
 import { ReactComponent as Example } from '@assets/weather/13d.svg'
 import { ReactComponent as Example1 } from '@assets/weather/09d.svg'
+import { useAppSelector } from '@lib/hooks'
+import { format } from 'date-fns'
+import { capitalizeFirstLetter } from '@lib/utils'
 
 export default function Sidebar() {
+	const weatherStore = useAppSelector((state) => state.weather)
+	const DATE = format(new Date().getDay(), 'EEEE')
+	const HOUR = format(new Date(), 'HH:mm')
+
+	const getDegree = (temp: number, measurement: string) => {
+		return (
+			<>
+				{Math.round(temp)}&#176;{measurement === 'metric' ? 'C' : 'F'}
+			</>
+		)
+	}
+
 	return (
 		<SidebarContainer>
-			<Search />
-			<WeatherIcon />
-			<WeatherValue>12&#176;C</WeatherValue>
-			<DateContainer>
-				<WeekDay>Monday,</WeekDay>
-				<DateValue>16:00</DateValue>
-			</DateContainer>
-			<Divider />
-			<MetaInfoItem>
-				<Example width="20" height="20" />
-				<MetaInfoValue>Mostly Cloudy</MetaInfoValue>
-			</MetaInfoItem>
-			<MetaInfoItem>
-				<Example1 width="20" height="20" />
-				<MetaInfoValue>Rain - 30%</MetaInfoValue>
-			</MetaInfoItem>
+			{weatherStore.current && (
+				<>
+					<Search />
+					<WeatherIcon src="" />
+					<WeatherValue>{getDegree(weatherStore.current.main.temp, weatherStore.measurement)}</WeatherValue>
+					<RowContainer>
+						<CityName>{weatherStore.city}</CityName>
+					</RowContainer>
+					<RowContainer>
+						<RowItem>{DATE},</RowItem>
+						<DateValue>{HOUR}</DateValue>
+					</RowContainer>
+					<RowContainer>
+						<RowItem>Feels like: {getDegree(weatherStore.current.main.feels_like, weatherStore.measurement)}</RowItem>
+					</RowContainer>
+					<Divider />
+					<MetaInfoItem>
+						<Example width="20" height="20" />
+						<MetaInfoValue>{capitalizeFirstLetter(weatherStore.current.weather[0].description)}</MetaInfoValue>
+					</MetaInfoItem>
+					<MetaInfoItem>
+						<Example1 width="20" height="20" />
+						<MetaInfoValue>Rain - 30%</MetaInfoValue>
+					</MetaInfoItem>
+				</>
+			)}
 		</SidebarContainer>
 	)
 }
@@ -33,7 +58,7 @@ const SidebarContainer = styled.div`
 	flex-direction: column;
 `
 
-const WeatherIcon = styled(Example)`
+const WeatherIcon = styled.img`
 	margin-top: 30px;
 	width: 200px;
 	height: 200px;
@@ -46,11 +71,11 @@ const WeatherValue = styled.p`
 	padding: 0;
 `
 
-const DateContainer = styled.div`
+const RowContainer = styled.div`
 	display: flex;
 `
 
-const WeekDay = styled.p`
+const RowItem = styled.p`
 	padding: 0;
 	color: ${theme.color.black};
 	font-size: ${theme.font.size.main}px;
@@ -71,4 +96,10 @@ const MetaInfoValue = styled.div`
 	color: ${theme.color.black};
 	font-size: ${theme.font.size.small}px;
 	margin-left: 5px;
+`
+
+const CityName = styled.p`
+	font-size: ${theme.font.size.large}px;
+	padding: 0;
+	color: ${theme.color.lightgray};
 `

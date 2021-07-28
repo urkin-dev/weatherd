@@ -1,3 +1,3 @@
-import { weatherSlice, getCurrentWeather } from '../store'
+import { weatherSlice, getCurrentWeather, changeMeasurement, setCity } from '../store'
 
-export { weatherSlice, getCurrentWeather }
+export { weatherSlice, getCurrentWeather, changeMeasurement, setCity }
