@@ -1,4 +1,4 @@
-import { getCurrentWeather } from '@feature/weather'
+import { fetchForecast, getCurrentWeather } from '@feature/weather'
 import { useAppDispatch } from '@lib/hooks'
 import { persistentStorage } from '@lib/http'
 import { PageTemplate } from '@ui'
@@ -25,6 +25,7 @@ function App() {
 		}
 
 		dispatch(getCurrentWeather())
+		dispatch(fetchForecast())
 	}
 
 	return <PageTemplate left={<Sidebar />} right={<p>Content</p>} />

@@ -53,7 +53,9 @@ export default function Sidebar() {
 					</MetaInfoItem>
 					<MetaInfoItem>
 						<Example1 width="20" height="20" />
-						<MetaInfoValue>Rain - 30%</MetaInfoValue>
+						{weatherStore.nearestForecast && (
+							<MetaInfoValue>Rain - {weatherStore.nearestForecast.pop * 100}%</MetaInfoValue>
+						)}
 					</MetaInfoItem>
 				</>
 			)}
