@@ -1,14 +1,13 @@
 import {
 	weatherSlice,
-	getCurrentWeather,
 	changeMeasurement,
 	setCity,
 	measurementType,
-	fetchForecast,
 	ICity,
 	getCoords,
-	updateCity
+	updateCity,
+	getWeather
 } from '../store'
 
-export { weatherSlice, getCurrentWeather, changeMeasurement, setCity, fetchForecast, getCoords, updateCity }
+export { weatherSlice, changeMeasurement, setCity, getCoords, updateCity, getWeather }
 export type { measurementType, ICity }

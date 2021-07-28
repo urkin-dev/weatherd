@@ -1,4 +1,3 @@
-import { fetchForecast, getCurrentWeather } from '@feature/weather'
 import { useAppDispatch } from '@lib/hooks'
 import { persistentStorage } from '@lib/http'
 import { PageTemplate } from '@ui'
@@ -6,6 +5,7 @@ import { setCity } from '@feature/weather'
 import { useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import { setCurrentCity } from '@lib/utils'
+import { getWeather } from '@feature/weather'
 
 export const DEFAULT_CITY = {
 	name: 'Moscow',
@@ -31,8 +31,7 @@ function App() {
 			setCurrentCity(DEFAULT_CITY)
 		}
 
-		dispatch(getCurrentWeather())
-		dispatch(fetchForecast())
+		dispatch(getWeather())
 	}
 
 	return <PageTemplate left={<Sidebar />} right={<p>Content</p>} />

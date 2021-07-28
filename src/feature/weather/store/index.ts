@@ -1,6 +1,6 @@
 import weatherSlice from './weatherSlice'
-import { getCurrentWeather, changeMeasurement, setCity, fetchForecast, getCoords, updateCity } from './weatherSlice'
+import { changeMeasurement, setCity, getCoords, updateCity, getWeather } from './weatherSlice'
 import { measurementType, ICity } from './weatherSlice'
 
-export { weatherSlice, getCurrentWeather, changeMeasurement, setCity, fetchForecast, getCoords, updateCity }
+export { weatherSlice, changeMeasurement, setCity, getCoords, updateCity, getWeather }
 export type { measurementType, ICity }

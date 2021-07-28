@@ -14,6 +14,7 @@ export default function Sidebar() {
 	const DATE = format(new Date().getDay(), 'EEEE')
 	const HOUR = format(new Date(), 'HH:mm')
 
+	// TODO: Move it to utils
 	const getDegree = (temp: number, measurement?: measurementType) => {
 		if (measurement) {
 			return (
@@ -34,7 +35,7 @@ export default function Sidebar() {
 					<WeatherIconContainer>
 						<Icon name={weatherStore.current.weather[0].icon} />
 					</WeatherIconContainer>
-					<WeatherValue>{getDegree(weatherStore.current.main.temp, weatherStore.measurement)}</WeatherValue>
+					<WeatherValue>{getDegree(weatherStore.current.temp, weatherStore.measurement)}</WeatherValue>
 					<RowContainer>
 						<CityName>{weatherStore.city.name}</CityName>
 					</RowContainer>
@@ -43,8 +44,18 @@ export default function Sidebar() {
 						<DateValue>{HOUR}</DateValue>
 					</RowContainer>
 					<RowContainer>
-						<RowItem>Feels like: {getDegree(weatherStore.current.main.feels_like, weatherStore.measurement)}</RowItem>
+						<RowItem>Feels like: {getDegree(weatherStore.current.feels_like, weatherStore.measurement)}</RowItem>
 					</RowContainer>
+					{weatherStore.nearestForecast && (
+						<>
+							<RowContainer>
+								<RowItem>Min: {getDegree(weatherStore.nearestForecast.temp.min, weatherStore.measurement)}</RowItem>
+							</RowContainer>
+							<RowContainer>
+								<RowItem>Max: {getDegree(weatherStore.nearestForecast.temp.max, weatherStore.measurement)}</RowItem>
+							</RowContainer>
+						</>
+					)}
 					<Divider />
 					<MetaInfoItem>
 						<WeatherMiniContainer>

@@ -5,7 +5,7 @@ import { ReactComponent as Loupe } from '@assets/loupe.svg'
 import { ReactComponent as Location } from '@assets/location.svg'
 import { KeyboardEvent } from 'react'
 import { useAppDispatch, useAppSelector } from '@lib/hooks'
-import { fetchForecast, getCoords, getCurrentWeather, updateCity } from '@feature/weather'
+import { getCoords, getWeather, updateCity } from '@feature/weather'
 
 export default function Search() {
 	const dispatch = useAppDispatch()
@@ -16,8 +16,7 @@ export default function Search() {
 
 		try {
 			await dispatch(getCoords(city))
-			await dispatch(getCurrentWeather()).unwrap()
-			await dispatch(fetchForecast()).unwrap()
+			await dispatch(getWeather()).unwrap()
 
 			// If the city is correct
 			dispatch(updateCity())
