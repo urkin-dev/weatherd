@@ -5,27 +5,13 @@ import { Divider } from 'antd'
 import { ReactComponent as Rain } from '@assets/weather/rain.svg'
 import { useAppSelector } from '@lib/hooks'
 import { format } from 'date-fns'
-import { capitalizeFirstLetter } from '@lib/utils'
+import { capitalizeFirstLetter, getDegree } from '@lib/utils'
 import Icon from './Icon'
-import { measurementType } from '@feature/weather'
 
 export default function Sidebar() {
 	const weatherStore = useAppSelector((state) => state.weather)
 	const DATE = format(new Date().getDay(), 'EEEE')
 	const HOUR = format(new Date(), 'HH:mm')
-
-	// TODO: Move it to utils
-	const getDegree = (temp: number, measurement?: measurementType) => {
-		if (measurement) {
-			return (
-				<>
-					{Math.round(temp)}&#176;{measurement === 'metric' ? 'C' : 'F'}
-				</>
-			)
-		} else {
-			return <>{Math.round(temp)}&#176;</>
-		}
-	}
 
 	return (
 		<SidebarContainer>
@@ -35,7 +21,9 @@ export default function Sidebar() {
 					<WeatherIconContainer>
 						<Icon name={weatherStore.current.weather[0].icon} />
 					</WeatherIconContainer>
-					<WeatherValue>{getDegree(weatherStore.current.temp, weatherStore.measurement)}</WeatherValue>
+					<WeatherValue>
+						{Math.round(weatherStore.current.temp)}&#176;{getDegree(weatherStore.measurement)}
+					</WeatherValue>
 					<RowContainer>
 						<CityName>{weatherStore.city.name}</CityName>
 					</RowContainer>
@@ -44,15 +32,21 @@ export default function Sidebar() {
 						<DateValue>{HOUR}</DateValue>
 					</RowContainer>
 					<RowContainer>
-						<RowItem>Feels like: {getDegree(weatherStore.current.feels_like, weatherStore.measurement)}</RowItem>
+						<RowItem>
+							Feels like: {Math.round(weatherStore.current.feels_like)}&#176;{getDegree(weatherStore.measurement)}
+						</RowItem>
 					</RowContainer>
 					{weatherStore.nearestForecast && (
 						<>
 							<RowContainer>
-								<RowItem>Min: {getDegree(weatherStore.nearestForecast.temp.min, weatherStore.measurement)}</RowItem>
+								<RowItem>
+									Min: {Math.round(weatherStore.nearestForecast.temp.min)}&#176;{getDegree(weatherStore.measurement)}
+								</RowItem>
 							</RowContainer>
 							<RowContainer>
-								<RowItem>Max: {getDegree(weatherStore.nearestForecast.temp.max, weatherStore.measurement)}</RowItem>
+								<RowItem>
+									Max: {Math.round(weatherStore.nearestForecast.temp.max)}&#176;{getDegree(weatherStore.measurement)}
+								</RowItem>
 							</RowContainer>
 						</>
 					)}

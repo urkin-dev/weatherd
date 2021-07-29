@@ -1,4 +1,4 @@
-import { ICity } from '@feature/weather'
+import { ICity, measurementType } from '@feature/weather'
 import { persistentStorage } from '@lib/http'
 
 export const capitalizeFirstLetter = (text: string) => {
@@ -9,4 +9,10 @@ export const setCurrentCity = (city: ICity) => {
 	persistentStorage.setItem('CITY', city.name)
 	persistentStorage.setItem('LAN', String(city.lat))
 	persistentStorage.setItem('LON', String(city.lon))
+}
+
+export const getDegree = (measurement?: measurementType) => {
+	if (measurement) {
+		return measurement === 'metric' ? 'C' : 'F'
+	}
 }

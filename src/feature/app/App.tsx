@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@lib/hooks'
 import { persistentStorage } from '@lib/http'
 import { PageTemplate } from '@ui'
-import { setCity } from '@feature/weather'
+import { Content, setCity } from '@feature/weather'
 import { useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import { setCurrentCity } from '@lib/utils'
@@ -34,7 +34,7 @@ function App() {
 		dispatch(getWeather())
 	}
 
-	return <PageTemplate left={<Sidebar />} right={<p>Content</p>} />
+	return <PageTemplate left={<Sidebar />} right={<Content />} />
 }
 
 export default App

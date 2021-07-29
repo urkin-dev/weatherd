@@ -9,5 +9,7 @@ import {
 	getWeather
 } from '../store'
 
-export { weatherSlice, changeMeasurement, setCity, getCoords, updateCity, getWeather }
+import Content from '../page'
+
+export { weatherSlice, changeMeasurement, setCity, getCoords, updateCity, getWeather, Content }
 export type { measurementType, ICity }
