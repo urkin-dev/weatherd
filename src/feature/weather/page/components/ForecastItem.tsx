@@ -29,11 +29,7 @@ const Card = styled.div`
 	background-color: ${theme.color.white};
 	border-radius: 15px;
 	padding: 15px;
-	min-width: 120px;
-
-	:last-of-type {
-		margin-right: 0;
-	}
+	width: 130px;
 `
 
 const CardTextItem = styled.p`

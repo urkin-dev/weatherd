@@ -19,6 +19,7 @@ export const theme = {
 	},
 	color: {
 		black: '#020202',
+		button: '#1A1A1A',
 		white: '#ffffff',
 		backgray: '#F7F6F9',
 		maingray: '#F6F6F8',

@@ -11,5 +11,7 @@ export default function ForecastList({ forecastData }: IProps) {
 }
 
 const Container = styled.div`
+	margin-top: 50px;
 	display: flex;
+	justify-content: space-between;
 `
