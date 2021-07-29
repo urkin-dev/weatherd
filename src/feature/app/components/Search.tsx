@@ -25,16 +25,9 @@ export default function Search() {
 		}
 	}
 
-	const getRightErrorMessage = (text: string) => {
-		const code = +text.substr(text.length - 3)
-
-		if (code === 404) return 'The city not found'
-		else return 'Something went wrong'
-	}
-
 	return (
 		<>
-			{weatherStore.error?.message && <ErrorMessage>{getRightErrorMessage(weatherStore.error.message)}</ErrorMessage>}
+			{weatherStore.error?.message && <ErrorMessage>{weatherStore.error.message}</ErrorMessage>}
 			<StyledInput
 				placeholder="Search for places..."
 				prefix={<SearchIcon />}

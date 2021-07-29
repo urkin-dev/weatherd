@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@lib/hooks'
+import { useAppDispatch, useAppSelector } from '@lib/hooks'
 import { persistentStorage } from '@lib/http'
 import { PageTemplate } from '@ui'
 import { Content, setCity } from '@feature/weather'
@@ -6,6 +6,8 @@ import { useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import { setCurrentCity } from '@lib/utils'
 import { getWeather } from '@feature/weather'
+import { Spin } from 'antd'
+import { styled } from '@linaria/react'
 
 export const DEFAULT_CITY = {
 	name: 'Moscow',
@@ -15,10 +17,13 @@ export const DEFAULT_CITY = {
 
 function App() {
 	const dispatch = useAppDispatch()
+	const loading = useAppSelector((state) => state.weather.loading)
 
 	useEffect(() => {
-		restoreSession()
-	}, [])
+		if (loading === 'idle') {
+			restoreSession()
+		}
+	}, [loading, dispatch])
 
 	const restoreSession = async () => {
 		const city = persistentStorage.getItem('CITY')
@@ -34,7 +39,17 @@ function App() {
 		dispatch(getWeather())
 	}
 
-	return <PageTemplate left={<Sidebar />} right={<Content />} />
+	return (
+		<StyledSpin spinning={loading === 'loading'} size="large">
+			<PageTemplate left={<Sidebar />} right={<Content />} />
+		</StyledSpin>
+	)
 }
+
+// Center spin loader
+const StyledSpin = styled(Spin)`
+	top: 50% !important;
+	transform: translateY(-50%);
+`
 
 export default App

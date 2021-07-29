@@ -14,6 +14,7 @@ export interface ICity {
 
 // Default State
 interface IStateProps {
+	loading: 'idle' | 'loading' | 'succeeded' | 'failed'
 	current: ICurrent | null
 	measurement: measurementType
 	forecast: IDailyItem[] | null
@@ -23,6 +24,7 @@ interface IStateProps {
 }
 // We need nearestForecast because probability of precipitation is not stored inside CurrentWeather in OpenWeatherMap API
 const initialState: IStateProps = {
+	loading: 'idle',
 	current: null,
 	forecast: null,
 	measurement: 'metric',
@@ -75,22 +77,42 @@ const weatherSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(getCoords.fulfilled, (state, action) => {
 			const location = action.payload[0]
-			state.city.name = location.name
-			state.city.lat = location.lat
-			state.city.lon = location.lon
-			state.error = null
+
+			if (location) {
+				state.city.name = location.name
+				state.city.lat = location.lat
+				state.city.lon = location.lon
+				state.loading = 'succeeded'
+				state.error = null
+			} else {
+				state.error = { message: 'City not found', code: '404', name: 'Error' }
+			}
+		})
+		builder.addCase(getCoords.pending, (state, action) => {
+			state.loading = 'loading'
 		})
 		builder.addCase(getCoords.rejected, (state, action) => {
 			state.error = action.error
+			state.loading = 'failed'
 		})
 		builder.addCase(getWeather.rejected, (state, action) => {
 			state.error = action.error
+			state.loading = 'failed'
 		})
 		builder.addCase(getWeather.fulfilled, (state, action) => {
 			state.current = action.payload.current
 			state.forecast = action.payload.daily
 			state.nearestForecast = action.payload.daily[0]
-			state.error = null
+
+			// Because we can't get normal code from getWeather rejected. Redux just doesn't take thunkApi argument without first arguent
+			if (state.error && state.error.name !== 'Error') {
+				state.error = null
+			}
+
+			state.loading = 'succeeded'
+		})
+		builder.addCase(getWeather.pending, (state, action) => {
+			state.loading = 'loading'
 		})
 	}
 })

@@ -8,7 +8,6 @@ interface IProps {
 }
 
 export default function DegreeSwitch({ active, onClick }: IProps) {
-	// TODO: add state
 	const onSwitch = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const measurement = e.currentTarget.value
 		onClick(measurement)
