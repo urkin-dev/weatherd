@@ -35,7 +35,7 @@ export const theme = {
 			large: 24,
 			small: 14,
 			extrasmall: 12,
-			huge: 36,
+			huge: 42,
 			megahuge: 72
 		}
 	}

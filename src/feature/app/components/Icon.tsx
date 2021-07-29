@@ -13,6 +13,8 @@ import { ReactComponent as N2 } from '@assets/weather/02n.svg'
 import { ReactComponent as N3 } from '@assets/weather/03d.svg'
 import { ReactComponent as N10 } from '@assets/weather/10n.svg'
 
+import { ReactComponent as Sunset } from '@assets/weather/sunset.svg'
+
 const ICONS = {
 	'01d': <D1 width="100%" height="100%" />,
 	'02d': <D2 width="100%" height="100%" />,
@@ -31,7 +33,8 @@ const ICONS = {
 	'10n': <N10 width="100%" height="100%" />,
 	'11n': <D11 width="100%" height="100%" />,
 	'13n': <D13 width="100%" height="100%" />,
-	'50n': <D50 width="100%" height="100%" />
+	'50n': <D50 width="100%" height="100%" />,
+	'sunset': <Sunset width="100%" height="100%" />
 }
 
 export type IconType = keyof typeof ICONS
