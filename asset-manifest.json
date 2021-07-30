@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/weatherd/static/css/main.e910bcdd.chunk.css",
-    "main.js": "/weatherd/static/js/main.b12f55f4.chunk.js",
-    "main.js.map": "/weatherd/static/js/main.b12f55f4.chunk.js.map",
+    "main.js": "/weatherd/static/js/main.c1a01f2c.chunk.js",
+    "main.js.map": "/weatherd/static/js/main.c1a01f2c.chunk.js.map",
     "runtime-main.js": "/weatherd/static/js/runtime-main.4d95e0a0.js",
     "runtime-main.js.map": "/weatherd/static/js/runtime-main.4d95e0a0.js.map",
-    "static/css/2.b9a5ee4e.chunk.css": "/weatherd/static/css/2.b9a5ee4e.chunk.css",
+    "static/css/2.73d66a42.chunk.css": "/weatherd/static/css/2.73d66a42.chunk.css",
     "static/js/2.0945cb40.chunk.js": "/weatherd/static/js/2.0945cb40.chunk.js",
     "static/js/2.0945cb40.chunk.js.map": "/weatherd/static/js/2.0945cb40.chunk.js.map",
     "index.html": "/weatherd/index.html",
-    "static/css/2.b9a5ee4e.chunk.css.map": "/weatherd/static/css/2.b9a5ee4e.chunk.css.map",
+    "static/css/2.73d66a42.chunk.css.map": "/weatherd/static/css/2.73d66a42.chunk.css.map",
     "static/css/main.e910bcdd.chunk.css.map": "/weatherd/static/css/main.e910bcdd.chunk.css.map",
     "static/js/2.0945cb40.chunk.js.LICENSE.txt": "/weatherd/static/js/2.0945cb40.chunk.js.LICENSE.txt",
     "static/media/01d.05aa2ca7.svg": "/weatherd/static/media/01d.05aa2ca7.svg",
@@ -31,9 +31,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.4d95e0a0.js",
-    "static/css/2.b9a5ee4e.chunk.css",
+    "static/css/2.73d66a42.chunk.css",
     "static/js/2.0945cb40.chunk.js",
     "static/css/main.e910bcdd.chunk.css",
-    "static/js/main.b12f55f4.chunk.js"
+    "static/js/main.c1a01f2c.chunk.js"
   ]
 }
