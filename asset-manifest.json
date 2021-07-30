@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/urkin-dev/weatherd/static/css/main.e910bcdd.chunk.css",
+    "main.js": "/urkin-dev/weatherd/static/js/main.44b80b33.chunk.js",
+    "main.js.map": "/urkin-dev/weatherd/static/js/main.44b80b33.chunk.js.map",
+    "runtime-main.js": "/urkin-dev/weatherd/static/js/runtime-main.bbb52305.js",
+    "runtime-main.js.map": "/urkin-dev/weatherd/static/js/runtime-main.bbb52305.js.map",
+    "static/css/2.38225991.chunk.css": "/urkin-dev/weatherd/static/css/2.38225991.chunk.css",
+    "static/js/2.89c0c1b6.chunk.js": "/urkin-dev/weatherd/static/js/2.89c0c1b6.chunk.js",
+    "static/js/2.89c0c1b6.chunk.js.map": "/urkin-dev/weatherd/static/js/2.89c0c1b6.chunk.js.map",
+    "index.html": "/urkin-dev/weatherd/index.html",
+    "static/css/2.38225991.chunk.css.map": "/urkin-dev/weatherd/static/css/2.38225991.chunk.css.map",
+    "static/css/main.e910bcdd.chunk.css.map": "/urkin-dev/weatherd/static/css/main.e910bcdd.chunk.css.map",
+    "static/js/2.89c0c1b6.chunk.js.LICENSE.txt": "/urkin-dev/weatherd/static/js/2.89c0c1b6.chunk.js.LICENSE.txt",
+    "static/media/01d.05aa2ca7.svg": "/urkin-dev/weatherd/static/media/01d.05aa2ca7.svg",
+    "static/media/01n.42bd1818.svg": "/urkin-dev/weatherd/static/media/01n.42bd1818.svg",
+    "static/media/02d.607636ec.svg": "/urkin-dev/weatherd/static/media/02d.607636ec.svg",
+    "static/media/02n.4a1b03b8.svg": "/urkin-dev/weatherd/static/media/02n.4a1b03b8.svg",
+    "static/media/03d.522a446d.svg": "/urkin-dev/weatherd/static/media/03d.522a446d.svg",
+    "static/media/04d.7fadf686.svg": "/urkin-dev/weatherd/static/media/04d.7fadf686.svg",
+    "static/media/09d.bf650d81.svg": "/urkin-dev/weatherd/static/media/09d.bf650d81.svg",
+    "static/media/10d.b0914174.svg": "/urkin-dev/weatherd/static/media/10d.b0914174.svg",
+    "static/media/10n.08843578.svg": "/urkin-dev/weatherd/static/media/10n.08843578.svg",
+    "static/media/11d.4f0aaedb.svg": "/urkin-dev/weatherd/static/media/11d.4f0aaedb.svg",
+    "static/media/13d.7dded5eb.svg": "/urkin-dev/weatherd/static/media/13d.7dded5eb.svg",
+    "static/media/50d.9cc4261a.svg": "/urkin-dev/weatherd/static/media/50d.9cc4261a.svg",
+    "static/media/location.289acb3a.svg": "/urkin-dev/weatherd/static/media/location.289acb3a.svg",
+    "static/media/loupe.8e509ab1.svg": "/urkin-dev/weatherd/static/media/loupe.8e509ab1.svg",
+    "static/media/rain.e7104745.svg": "/urkin-dev/weatherd/static/media/rain.e7104745.svg",
+    "static/media/sunset.0fdb9fd6.svg": "/urkin-dev/weatherd/static/media/sunset.0fdb9fd6.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bbb52305.js",
+    "static/css/2.38225991.chunk.css",
+    "static/js/2.89c0c1b6.chunk.js",
+    "static/css/main.e910bcdd.chunk.css",
+    "static/js/main.44b80b33.chunk.js"
+  ]
+}
