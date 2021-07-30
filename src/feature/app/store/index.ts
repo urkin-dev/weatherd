@@ -2,7 +2,8 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import { weatherSlice } from '@feature/weather'
 
 export const store = configureStore({
-	reducer: { weather: weatherSlice }
+	reducer: { weather: weatherSlice },
+	devTools: false
 })
 
 export type AppDispatch = typeof store.dispatch

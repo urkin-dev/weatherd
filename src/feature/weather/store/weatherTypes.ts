@@ -1,6 +1,5 @@
 import { IconType } from '@feature/app'
 
-// TODO: Find out how to use modules, namespaces and other stuff properly in typescript
 interface IWeatherItem {
 	id: number
 	main: string

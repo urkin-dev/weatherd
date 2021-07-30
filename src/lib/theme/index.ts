@@ -1,16 +1,5 @@
 // TODO: Refactor this
 export const theme = {
-	container: {
-		tablet: 768,
-		desktop: 1200,
-		mobile: 500
-	},
-	breakpoints: {
-		mobile: 0,
-		tablet: 768,
-		desktop: 1200
-	},
-	padding: {},
 	media: {
 		tablet: `@media (min-width: 768px)`,
 		onlyTablet: `@media (min-width: 768px) and (max-width: 1200px)`,
