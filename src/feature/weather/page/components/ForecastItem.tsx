@@ -30,6 +30,7 @@ const Card = styled.div`
 	border-radius: 15px;
 	padding: 15px;
 	width: 130px;
+	margin-top: 10px;
 `
 
 const CardTextItem = styled.p`

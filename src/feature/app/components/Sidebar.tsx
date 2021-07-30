@@ -72,6 +72,11 @@ export default function Sidebar() {
 const SidebarContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+
+	${theme.media.mobile} {
+		width: 100%;
+	}
 `
 
 const WeatherIconContainer = styled.div`
@@ -90,6 +95,10 @@ const WeatherValue = styled.p`
 	font-size: ${theme.font.size.megahuge}px;
 	color: ${theme.color.black};
 	padding: 0;
+
+	${theme.media.mobile} {
+		font-size: ${theme.font.size.huge}px;
+	}
 `
 
 const RowContainer = styled.div`

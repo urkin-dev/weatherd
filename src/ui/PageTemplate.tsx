@@ -20,11 +20,19 @@ const Container = styled.div`
 	display: flex;
 	width: 100%;
 	min-height: 100vh;
+
+	${theme.media.mobile} {
+		flex-direction: column;
+	}
 `
 
 const StyledLeft = styled.div`
-	width: 30%;
+	width: 360px;
 	padding: 45px 35px;
+
+	${theme.media.mobile} {
+		width: 100%;
+	}
 `
 
 const StyledRight = styled.div`
