@@ -2,6 +2,7 @@ import { theme } from '@lib/theme'
 import { styled } from '@linaria/react'
 import { Icon } from '@feature/app'
 import { IDailyItem } from 'feature/weather/store'
+import { format, fromUnixTime } from 'date-fns'
 
 interface IProps {
 	data: IDailyItem
@@ -17,6 +18,7 @@ export default function ForecastItem({ data }: IProps) {
 			<CardTextItem>
 				{Math.round(data.temp.max)}&#176;<MinDeg>{Math.round(data.temp.min)}&#176;</MinDeg>
 			</CardTextItem>
+			<DayValue>{format(fromUnixTime(data.dt), 'EEEE')}</DayValue>
 		</Card>
 	)
 }
@@ -44,6 +46,10 @@ const IconWrapper = styled.div`
 	height: 60px;
 	margin: 10px 0;
 	width: 100%;
+`
+
+const DayValue = styled(CardTextItem)`
+	color: ${theme.color.blue};
 `
 
 const MinDeg = styled.span`
