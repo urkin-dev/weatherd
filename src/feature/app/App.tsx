@@ -8,6 +8,7 @@ import { setCurrentCity } from '@lib/utils'
 import { getWeather } from '@feature/weather'
 import { Spin } from 'antd'
 import { styled } from '@linaria/react'
+import { theme } from '@lib/theme'
 
 export const DEFAULT_CITY = {
 	name: 'Moscow',
@@ -50,6 +51,11 @@ function App() {
 const StyledSpin = styled(Spin)`
 	top: 50% !important;
 	transform: translateY(-50%);
+
+	${theme.media.mobile} {
+		top: 0 !important;
+		transform: translateY(0);
+	}
 `
 
 export default App
