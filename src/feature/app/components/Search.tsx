@@ -5,24 +5,54 @@ import { ReactComponent as Loupe } from '@assets/loupe.svg'
 import { ReactComponent as Location } from '@assets/location.svg'
 import { KeyboardEvent } from 'react'
 import { useAppDispatch, useAppSelector } from '@lib/hooks'
-import { getCoords, getWeather, updateCity } from '@feature/weather'
+import { getCityByCoords, getCoords, getWeather, ICoords, setError, setLoading, updateCity } from '@feature/weather'
 
 export default function Search() {
 	const dispatch = useAppDispatch()
 	const weatherStore = useAppSelector((state) => state.weather)
+	let coords: ICoords
 
-	const onSearch = async (e: KeyboardEvent<HTMLInputElement>) => {
-		const city = e.currentTarget.value
+	const makeApiCall = async (city: string | null, coords?: ICoords) => {
+		if (city?.trim() === '') return
 
 		try {
-			await dispatch(getCoords(city))
+			if (city) {
+				await dispatch(getCoords(city))
+			} else if (coords) {
+				await dispatch(getCityByCoords(coords))
+			}
+
 			await dispatch(getWeather()).unwrap()
 
 			// If the city is correct
 			dispatch(updateCity())
 		} catch (e) {
-			console.log(e.message)
+			console.error(e)
 		}
+	}
+
+	const getLocation = async () => {
+		if (!navigator.geolocation) {
+			dispatch(setError({ name: 'Error', message: 'Geolocation is not supported by your browser' }))
+		} else {
+			dispatch(setLoading('loading'))
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					coords = { lat: position.coords.latitude, lon: position.coords.longitude }
+					makeApiCall(null, coords)
+				},
+				() => {
+					dispatch(setError({ name: 'Error', message: 'Unable to retrieve your location' }))
+					dispatch(setLoading('failed'))
+				}
+			)
+		}
+	}
+
+	const onSearch = async (e: KeyboardEvent<HTMLInputElement>) => {
+		const city = e.currentTarget.value
+
+		await makeApiCall(city)
 	}
 
 	return (
@@ -33,7 +63,7 @@ export default function Search() {
 				prefix={<SearchIcon />}
 				onPressEnter={onSearch}
 				suffix={
-					<LocationButton>
+					<LocationButton onClick={getLocation}>
 						<LocationIcon />
 					</LocationButton>
 				}

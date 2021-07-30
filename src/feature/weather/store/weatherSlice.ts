@@ -6,15 +6,20 @@ import { setCurrentCity } from '@lib/utils'
 
 export type measurementType = 'metric' | 'imperial'
 
-export interface ICity {
-	name: string
+export type loadingType = 'idle' | 'loading' | 'succeeded' | 'failed'
+
+export interface ICoords {
 	lat: number
 	lon: number
 }
 
+export interface ICity extends ICoords {
+	name: string
+}
+
 // Default State
 interface IStateProps {
-	loading: 'idle' | 'loading' | 'succeeded' | 'failed'
+	loading: loadingType
 	current: ICurrent | null
 	measurement: measurementType
 	forecast: IDailyItem[] | null
@@ -53,6 +58,14 @@ export const getCoords = createAsyncThunk('weather/getCoords', async (cityName: 
 	return response.data
 })
 
+export const getCityByCoords = createAsyncThunk('weather/getCityByCoords', async (coords: ICoords) => {
+	const response = await geoHttp.get<ILocation[]>(
+		`reverse?lat=${coords.lat}&lon=${coords.lon}&appid=${process.env.REACT_APP_API_KEY}`
+	)
+
+	return response.data
+})
+
 const weatherSlice = createSlice({
 	name: 'weather',
 	initialState,
@@ -68,10 +81,15 @@ const weatherSlice = createSlice({
 		setCity: (state, action: PayloadAction<ICity>) => {
 			state.city = action.payload
 		},
-
+		setError: (state, action: PayloadAction<SerializedError>) => {
+			state.error = action.payload
+		},
 		updateCity: (state) => {
 			state.city = Object.assign({}, state.city)
 			setCurrentCity(state.city)
+		},
+		setLoading: (state, action: PayloadAction<loadingType>) => {
+			state.loading = action.payload
 		}
 	},
 	extraReducers: (builder) => {
@@ -92,6 +110,26 @@ const weatherSlice = createSlice({
 			state.loading = 'loading'
 		})
 		builder.addCase(getCoords.rejected, (state, action) => {
+			state.error = action.error
+			state.loading = 'failed'
+		})
+		builder.addCase(getCityByCoords.fulfilled, (state, action) => {
+			const location = action.payload[0]
+
+			if (location) {
+				state.city.name = location.name
+				state.city.lat = location.lat
+				state.city.lon = location.lon
+				state.loading = 'succeeded'
+				state.error = null
+			} else {
+				state.error = { message: 'City not found', code: '404', name: 'Error' }
+			}
+		})
+		builder.addCase(getCityByCoords.pending, (state, action) => {
+			state.loading = 'loading'
+		})
+		builder.addCase(getCityByCoords.rejected, (state, action) => {
 			state.error = action.error
 			state.loading = 'failed'
 		})
@@ -117,5 +155,5 @@ const weatherSlice = createSlice({
 	}
 })
 
-export const { changeMeasurement, setCity, updateCity } = weatherSlice.actions
+export const { changeMeasurement, setCity, updateCity, setError, setLoading } = weatherSlice.actions
 export default weatherSlice.reducer

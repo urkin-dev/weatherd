@@ -70,7 +70,7 @@ export default function Content() {
 						<HighlightsCard
 							title="Wind speed"
 							mainValue={Number(weatherStore.current.wind_speed)}
-							valuePrefix={weatherStore.measurement === 'metric' ? 'met/sec' : 'miles/hour'}
+							valuePrefix={weatherStore.measurement === 'metric' ? 'met/sec' : 'mil/hour'}
 							status={getStatus(Number(weatherStore.current.wind_speed), 'Wind speed')}
 						/>
 						<HighlightsCard title="Pressure" mainValue={Number(weatherStore.current.pressure)} valuePrefix="hPa" />
