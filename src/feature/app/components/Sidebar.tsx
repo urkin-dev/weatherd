@@ -72,10 +72,10 @@ export default function Sidebar() {
 const SidebarContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 
 	${theme.media.mobile} {
 		width: 100%;
+		align-items: center;
 	}
 `
 
