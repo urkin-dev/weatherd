@@ -46,7 +46,7 @@ export const getWeather = createAsyncThunk('weather/getWeather', async () => {
 	const { measurement, city } = store.getState().weather
 
 	const response = await http.get<IWeatherData>(
-		`/onecall?lat=${city.lat}&lon=${city.lon}&exclude=minutely,hourly&appid=${process.env.REACT_APP_API_KEY}&units=${measurement}`
+		`onecall?lat=${city.lat}&lon=${city.lon}&exclude=minutely,hourly&appid=${process.env.REACT_APP_API_KEY}&units=${measurement}`
 	)
 
 	return response.data
