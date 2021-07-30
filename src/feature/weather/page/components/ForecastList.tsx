@@ -14,5 +14,5 @@ const Container = styled.div`
 	margin-top: 50px;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
 `

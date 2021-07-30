@@ -28,6 +28,10 @@ export default function DegreeSwitch({ active, onClick }: IProps) {
 const Container = styled.div`
 	display: flex;
 	justify-content: right;
+
+	${theme.media.mobile} {
+		justify-content: center;
+	}
 `
 
 const SwitchButton = styled.button`
